@@ -405,6 +405,16 @@ module ActiveLdap
         end
       end
 
+      def create!(attributes=nil, &block)
+        if attributes.is_a?(Array)
+          attributes.collect {|attrs| create(attrs, &block)}
+        else
+          object = new(attributes, &block)
+          object.save!
+          object
+        end
+      end
+
       # This class function is used to setup all mappings between the subclass
       # and ldap for use in activeldap
       #
